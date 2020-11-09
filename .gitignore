@@ -1,0 +1,5 @@
+node_modules
+src/**/*.js
+!src/pages/_document.js
+!src/pages/_app.js
+.env
