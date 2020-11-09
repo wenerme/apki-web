@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Column, useRowSelect, useTable } from 'react-table';
+import { Column, useTable } from 'react-table';
 import { InputGroup } from '@blueprintjs/core';
 import { formatDistanceToNow } from 'date-fns';
 import Fuse from 'fuse.js';
@@ -51,25 +51,22 @@ export const MirrorTable: React.FC<{ data? }> = ({ data: originData = [] }) => {
   };
 
   const getRowId = React.useMemo(() => (r) => r.host, []);
-  const tableInstance = useTable(
-    {
-      columns,
-      data: finalData,
-      getRowId,
-      defaultColumn: {
-        Cell: ({ value }) => {
-          switch (value) {
-            case undefined:
-            case null:
-            case '':
-              return <span style={{ color: '#ccc' }}>N/A</span>;
-          }
-          return String(value);
-        },
+  const tableInstance = useTable({
+    columns,
+    data: finalData,
+    getRowId,
+    defaultColumn: {
+      Cell: ({ value }) => {
+        switch (value) {
+          case undefined:
+          case null:
+          case '':
+            return <span style={{ color: '#ccc' }}>N/A</span>;
+        }
+        return String(value);
       },
     },
-    useRowSelect,
-  );
+  });
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
   return (

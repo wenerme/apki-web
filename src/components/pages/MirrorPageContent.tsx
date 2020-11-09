@@ -9,6 +9,7 @@ const ContentDiv = styled.div`
 
   > main {
     border-right: 1px solid #dcecff;
+    max-width: 400px;
   }
   > aside {
     flex: 1;

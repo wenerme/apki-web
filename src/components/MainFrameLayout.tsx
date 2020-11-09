@@ -60,9 +60,14 @@ const LayoutDiv = styled.div`
 `;
 
 export const MainFrameLayout: React.FC<{ active? }> = ({ children }) => {
+  if (typeof window !== 'undefined' && window.self !== window.top) {
+    return <>{children}</>;
+  }
+
   const topMenuItems = [
     { label: 'AlpineLinux Package Indexer', icon: <div className={'logo-letter'}>A</div>, href: '/' },
-    { label: 'Packages', icon: 'box', href: '/apk' },
+    { label: 'Packages', icon: 'box', href: '/package' },
+    { label: 'File', icon: 'folder-open', href: '/file' },
     { label: 'Mirror', icon: 'comparison', href: '/mirror' },
   ];
   const bottomMenuItems = [{ label: 'Help', icon: 'help', href: '/about' }];
