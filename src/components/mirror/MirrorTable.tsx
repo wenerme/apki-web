@@ -1,17 +1,12 @@
 import React, { useMemo } from 'react';
-import { Column, useTable } from 'react-table';
+import { Column, useRowSelect, useTable } from 'react-table';
 import { InputGroup } from '@blueprintjs/core';
 import { formatDistanceToNow } from 'date-fns';
 import Fuse from 'fuse.js';
 import { useImmer } from 'use-immer';
+import { useRouter } from 'next/router';
 
 function processMirror(v) {
-  // add host
-  if (/^[-0-9a-z.]+$/.test(v.name)) {
-    v.host = v.name;
-  } else {
-    v.host = new URL(v.url).host;
-  }
   // golang zero time
   if (v.lastUpdated?.startsWith('0001-')) {
     v.lastUpdated = null;
@@ -43,29 +38,38 @@ export const MirrorTable: React.FC<{ data? }> = ({ data: originData = [] }) => {
         accessor: 'bandwidth',
       },
       {
-        Header: 'Sync',
+        Header: 'Last Sync',
         accessor: 'syncDelay',
       },
     ],
     [],
   );
-  const getRowId = React.useMemo(() => (r) => r.nodeId, []);
-  const tableInstance = useTable({
-    columns,
-    data: finalData,
-    getRowId,
-    defaultColumn: {
-      Cell: ({ value }) => {
-        switch (value) {
-          case undefined:
-          case null:
-          case '':
-            return <span style={{ color: '#ccc' }}>N/A</span>;
-        }
-        return String(value);
+
+  const router = useRouter();
+  const doGotoDetail = ({ host }) => {
+    router.push(`/mirror/${host}`);
+  };
+
+  const getRowId = React.useMemo(() => (r) => r.host, []);
+  const tableInstance = useTable(
+    {
+      columns,
+      data: finalData,
+      getRowId,
+      defaultColumn: {
+        Cell: ({ value }) => {
+          switch (value) {
+            case undefined:
+            case null:
+            case '':
+              return <span style={{ color: '#ccc' }}>N/A</span>;
+          }
+          return String(value);
+        },
       },
     },
-  });
+    useRowSelect,
+  );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
   return (
@@ -116,7 +120,12 @@ export const MirrorTable: React.FC<{ data? }> = ({ data: originData = [] }) => {
                 prepareRow(row);
                 return (
                   // Apply the row props
-                  <tr {...row.getRowProps()}>
+                  <tr
+                    {...row.getRowProps()}
+                    onClick={() => {
+                      doGotoDetail({ host: row.original['host'] });
+                    }}
+                  >
                     {
                       // Loop over the rows cells
                       row.cells.map((cell) => {

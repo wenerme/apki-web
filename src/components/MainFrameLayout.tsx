@@ -65,7 +65,7 @@ export const MainFrameLayout: React.FC<{ active? }> = ({ children }) => {
     { label: 'Packages', icon: 'box', href: '/apk' },
     { label: 'Mirror', icon: 'comparison', href: '/mirror' },
   ];
-  const bottomMenuItems = [{ label: 'Help', icon: 'help', href: 'https://github.com' }];
+  const bottomMenuItems = [{ label: 'Help', icon: 'help', href: '/about' }];
 
   return (
     <LayoutDiv>
