@@ -27,6 +27,9 @@ const LayoutDiv = styled.div`
     // content 60px
     box-sizing: content-box;
 
+    position: sticky;
+    top: 0;
+
     a {
       text-decoration: none;
     }
