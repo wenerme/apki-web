@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Divider, H3, H4, Popover, Position, Tag, Tooltip } from '@blueprintjs/core';
 import styled from 'styled-components';
 import ms from 'ms';
+import { usePrefer } from '../prefers';
 
 const NormalTable = styled.table`
   min-width: 400px;
@@ -32,6 +33,7 @@ const spanNa = <span style={{ color: '#ccc' }}>N/A</span>;
 
 export const MirrorDetail: React.FC<{ data? }> = ({ data = {} }) => {
   const { host, location, name, urls, lastUpdated, bandwidth, lastError, lastRefreshDuration } = data;
+  const [pref, updatePrefer] = usePrefer();
   return (
     <ContentDiv>
       <div className={'wrapper'}>
@@ -102,6 +104,18 @@ export const MirrorDetail: React.FC<{ data? }> = ({ data = {} }) => {
                           />
                         </Tooltip>
                       </Popover>
+                      {(url.protocol === 'http:' || url.protocol === 'https:') && (
+                        <Tooltip content={'Use this mirror when download'} position={Position.RIGHT}>
+                          <Button
+                            minimal
+                            active={pref.mirror === v}
+                            icon={'saved'}
+                            onClick={() => {
+                              updatePrefer({ mirror: v });
+                            }}
+                          />
+                        </Tooltip>
+                      )}
                     </td>
                   </tr>
                 );

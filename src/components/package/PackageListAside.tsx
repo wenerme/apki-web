@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import React, { PureComponent, useMemo } from 'react';
-import { PkgName } from '../../apk/parsenNames';
+import { PkgName } from '../../apk/parseOriginNames';
 import { useImmer } from 'use-immer';
 import _ from 'lodash';
 import { H2, InputGroup, Switch, Tag } from '@blueprintjs/core';
 import Fuse from 'fuse.js';
 import AutoSizer from '../AutoSizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import { ActiveLink } from '../ActiveLink';
 
 const AsideStyle = styled.aside`
   min-height: 100%;
@@ -47,7 +48,7 @@ const AsideStyle = styled.aside`
     &.odd {
       background: rgba(191, 204, 214, 0.15);
     }
-    cursor: pointer;
+    // cursor: pointer;
     &:hover {
       // interactive
       background-color: rgba(191, 204, 214, 0.3);
@@ -159,7 +160,11 @@ class PackageNameItemRenderer extends PureComponent<ListChildComponentProps> {
     return (
       <div className={`package-name-item ${this.props.index % 2 == 0 ? 'odd' : ''}`} style={this.props.style}>
         <div>
-          <span className={'name'}>{item.name}</span>
+          <ActiveLink href={`/packages/${item.name}`}>
+            <a className={'name'} title={`package ${item.name} origin ${item.origin}`}>
+              {item.name}
+            </a>
+          </ActiveLink>
           <div>
             {/*{origin && (*/}
             {/*  <Tag minimal round>*/}
@@ -176,7 +181,13 @@ class PackageNameItemRenderer extends PureComponent<ListChildComponentProps> {
           </div>
         </div>
         {origin && (
-          <div style={{ textAlign: 'left' }}>{origin && <small className={'bp3-text-muted'}>{origin}</small>}</div>
+          <div style={{ textAlign: 'left' }}>
+            <ActiveLink href={`/packages/${item.origin}`}>
+              <a className={'bp3-text-muted bp3-text-small'} title={`package ${item.name} origin ${item.origin}`}>
+                {origin}
+              </a>
+            </ActiveLink>
+          </div>
         )}
       </div>
     );

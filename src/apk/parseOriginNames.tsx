@@ -10,6 +10,8 @@ export interface PkgName {
   origin: string;
 }
 
+export const PkgNameTags = ['doc', 'dev', 'lib', 'lang', 'openrc', 'dbg', 'completion'];
+
 export function parseOriginNames(names: Array<string[]>): PkgName[] {
   const all = [];
   const len = names.length;

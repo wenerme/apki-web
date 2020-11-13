@@ -15,6 +15,9 @@ export const AboutPageContent: React.FC = () => {
               <li>
                 Indexer backend <a href="https://github.com/wenerme/tools">wenerme/tools</a>{' '}
               </li>
+              <li>
+                Indexer Frontend <a href="https://github.com/wenerme/apki-web">wenerme/apki-web</a>{' '}
+              </li>
             </ul>
           </section>
         </article>

@@ -13,6 +13,10 @@ const orders = {
   branch: Object.fromEntries(
     [
       'edge',
+      'v3.16',
+      'v3.15',
+      'v3.14',
+      'v3.13',
       'v3.12',
       'v3.11',
       'v3.10',

@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { MainFrameLayout } from '../components/MainFrameLayout';
 import { GetStaticProps } from 'next';
 import { api } from '../api/api';
 import { PackagesPageContent } from '../components/pages/PackagesPageContent';
-import { parseOriginNames } from '../apk/parsenNames';
+import { parseOriginNames } from '../apk/parseOriginNames';
 
 const PackagePage: React.FC<{ names?: string }> = ({ names = '' }) => {
   const pkgs = useMemo(() => {
@@ -13,6 +13,9 @@ const PackagePage: React.FC<{ names?: string }> = ({ names = '' }) => {
         .split('\n')
         .map((v) => v.split(',')),
     );
+  }, [names]);
+  useEffect(() => {
+    window['_pkgs'] = pkgs;
   }, [names]);
   return (
     <MainFrameLayout>

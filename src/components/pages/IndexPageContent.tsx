@@ -10,7 +10,10 @@ export const IndexPageContent: React.FC = () => {
       <section>
         <ul>
           <li>
-            Github <a href="https://github.com/wenerme/tools">wenerme/tools</a>{' '}
+            apkindexer <a href="https://github.com/wenerme/tools">wenerme/tools</a>
+          </li>
+          <li>
+            <a href="https://github.com/wenerme/tools">wenerme/apki-web</a>
           </li>
         </ul>
       </section>
