@@ -66,9 +66,9 @@ export const MainFrameLayout: React.FC<{ active? }> = ({ children }) => {
 
   const topMenuItems = [
     { label: 'AlpineLinux Package Indexer', icon: <div className={'logo-letter'}>A</div>, href: '/' },
-    { label: 'Packages', icon: 'box', href: '/package' },
+    { label: 'Packages', icon: 'box', href: '/packages' },
     { label: 'File', icon: 'folder-open', href: '/file' },
-    { label: 'Mirror', icon: 'comparison', href: '/mirror' },
+    { label: 'Mirror', icon: 'comparison', href: '/mirrors' },
   ];
   const bottomMenuItems = [{ label: 'Help', icon: 'help', href: '/about' }];
 

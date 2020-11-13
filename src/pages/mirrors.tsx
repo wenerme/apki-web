@@ -2,8 +2,7 @@ import React from 'react';
 import { MainFrameLayout } from '../components/MainFrameLayout';
 import { MirrorPageContent } from '../components/pages/MirrorPageContent';
 import { GetStaticProps } from 'next';
-import { gql } from 'graphql-request';
-import { fetchGraph } from '../api/graph';
+import { api } from '../api/api';
 
 const MirrorPage: React.FC<{ data }> = ({ data = {} }) => {
   return (
@@ -14,30 +13,11 @@ const MirrorPage: React.FC<{ data }> = ({ data = {} }) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({}) => {
-  const query = gql`
-    {
-      mirrors: allMirrors {
-        nodes {
-          nodeId
-          name
-          url
-          urls
-          lastUpdated
-          location
-          lastError
-          lastRefreshDuration
-          bandwidth
-          host
-        }
-      }
-    }
-  `;
-  const data = await fetchGraph(query);
-  // const data = require('./mocks/mirrors.json');
+  const data = await api(`mirrors`);
   return {
     props: {
       data: {
-        mirrors: data.mirrors?.nodes,
+        mirrors: data,
       },
     },
     // 15m
