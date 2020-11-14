@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { Package } from './interfaces';
 import { PackageDetailPanel } from './PackageDetailPanel';
 import { usePrefer } from '../prefers';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const ContentDiv = styled.div`
   padding: 0 8px;
@@ -19,12 +21,18 @@ const ContentDiv = styled.div`
     }
   }
 `;
-export const NamedPackageList: React.FC<{ packages: any[] }> = ({ packages }) => {
+export const NamedPackageList: React.FC<{ packages: any[]; branch?; arch? }> = ({ packages }) => {
   const pkg = useMemo(() => parseNamedPackages(packages), [packages]);
   const [pref, updatePref] = usePrefer();
-  const [state, update] = useImmer(() => {
-    return { branch: pref.branch || pkg.branch, arch: pref.arch || pkg.arch };
+  const router = useRouter();
+
+  const [state, update] = useImmer<{ branch: string; arch: string }>(() => {
+    return {
+      branch: String(router.query.branch || pref.branch || pkg.branch),
+      arch: String(router.query.arch || pref.arch || pkg.arch),
+    };
   });
+
   useEffect(() => {
     const { arch, branch } = state;
     updatePref({ arch, branch });
@@ -51,7 +59,18 @@ export const NamedPackageList: React.FC<{ packages: any[] }> = ({ packages }) =>
               large
             >
               {pkg.arches.map((v) => {
-                return <Tab id={v} title={v} disabled={!Boolean(pkg.byBranchArch[`${state.branch}/${v}`])} />;
+                return (
+                  <Tab
+                    id={v}
+                    key={v}
+                    title={
+                      <Link href={`/packages/${pkg.name}/${state.branch}/${v}`}>
+                        <a>{v}</a>
+                      </Link>
+                    }
+                    disabled={!Boolean(pkg.byBranchArch[`${state.branch}/${v}`])}
+                  />
+                );
               })}
             </Tabs>
           </div>
@@ -69,7 +88,12 @@ export const NamedPackageList: React.FC<{ packages: any[] }> = ({ packages }) =>
               return (
                 <Tab
                   id={v}
-                  title={v}
+                  key={v}
+                  title={
+                    <Link href={`/packages/${pkg.name}/${v}/${state.arch}`}>
+                      <a>{v}</a>
+                    </Link>
+                  }
                   disabled={!Boolean(pkg.byBranchArch[`${v}/${state.arch}`])}
                   panel={<PackageDetailPanel pkg={pkg.byBranchArch[`${state.branch}/${state.arch}`]} />}
                 />

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export interface Preference {
   branch?: string;
@@ -19,6 +19,10 @@ export function getPrefer(): Preference {
 
 export function usePrefer(): [Preference, (o: Partial<Preference>) => void] {
   const [state, set] = useState(getPrefer);
+  useEffect(() => {
+    // ssr
+    set(getPrefer());
+  }, []);
   return useMemo(() => {
     return [
       state,

@@ -1,9 +1,9 @@
 import React from 'react';
-import { MainFrameLayout } from '../../components/MainFrameLayout';
+import { MainFrameLayout } from '../../../../components/MainFrameLayout';
+import { PackagesPageContent } from '../../../../components/pages/PackagesPageContent';
+import { getPkgOrigins } from '../../../../components/locals';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { api } from '../../api/api';
-import { PackagesPageContent } from '../../components/pages/PackagesPageContent';
-import { getPkgOrigins } from '../../components/locals';
+import { api } from '../../../../api/api';
 
 const PackageDetailPage: React.FC<{ packages? }> = ({ packages }) => {
   return (

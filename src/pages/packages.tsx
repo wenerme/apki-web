@@ -4,6 +4,7 @@ import { GetStaticProps } from 'next';
 import { api } from '../api/api';
 import { PackagesPageContent } from '../components/pages/PackagesPageContent';
 import { parseOriginNames } from '../apk/parseOriginNames';
+import { setPkgOrigins } from '../components/locals';
 
 const PackagePage: React.FC<{ names?: string }> = ({ names = '' }) => {
   const pkgs = useMemo(() => {
@@ -15,7 +16,7 @@ const PackagePage: React.FC<{ names?: string }> = ({ names = '' }) => {
     );
   }, [names]);
   useEffect(() => {
-    window['_pkgs'] = pkgs;
+    setPkgOrigins({ pkgs, names });
   }, [names]);
   return (
     <MainFrameLayout>
