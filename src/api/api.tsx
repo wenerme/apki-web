@@ -32,7 +32,7 @@ export function api(input: Partial<Request> | string, init?: RequestInit & Parti
       return v.json();
     }
 
-    let err = new Error(`错误请求: ${v.status} - ${v.statusText}`);
+    const err = new Error(`错误请求: ${v.status} - ${v.statusText}`);
     try {
       const r = await v.json();
       Object.assign(err, r);

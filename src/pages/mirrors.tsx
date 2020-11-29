@@ -12,7 +12,7 @@ const MirrorPage: React.FC<{ data }> = ({ data = {} }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({}) => {
+export const getStaticProps: GetStaticProps = async () => {
   const data = await api(`mirrors`);
   return {
     props: {

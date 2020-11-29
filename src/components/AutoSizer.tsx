@@ -1,3 +1,4 @@
+/*eslint-disable*/
 // https://github.com/bvaughn/react-virtualized/blob/master/source/AutoSizer/AutoSizer.js
 
 import React, { CSSProperties } from 'react';
@@ -194,7 +195,7 @@ export default class AutoSizer extends React.Component<Props, State> {
  **/
 export function createDetectElementResize(nonce, hostWindow) {
   // Check `document` and `window` in case of server-side rendering
-  var _window;
+  let _window;
   if (typeof hostWindow !== 'undefined') {
     _window = hostWindow;
   } else if (typeof window !== 'undefined') {
@@ -205,11 +206,11 @@ export function createDetectElementResize(nonce, hostWindow) {
     _window = global;
   }
 
-  var attachEvent = typeof _window.document !== 'undefined' && _window.document.attachEvent;
+  const attachEvent = typeof _window.document !== 'undefined' && _window.document.attachEvent;
 
   if (!attachEvent) {
-    var requestFrame = (function () {
-      var raf =
+    const requestFrame = (function () {
+      const raf =
         _window.requestAnimationFrame ||
         _window.mozRequestAnimationFrame ||
         _window.webkitRequestAnimationFrame ||
@@ -221,8 +222,8 @@ export function createDetectElementResize(nonce, hostWindow) {
       };
     })();
 
-    var cancelFrame = (function () {
-      var cancel =
+    const cancelFrame = (function () {
+      const cancel =
         _window.cancelAnimationFrame ||
         _window.mozCancelAnimationFrame ||
         _window.webkitCancelAnimationFrame ||
@@ -233,7 +234,7 @@ export function createDetectElementResize(nonce, hostWindow) {
     })();
 
     var resetTriggers = function (element) {
-      var triggers = element.__resizeTriggers__,
+      const triggers = element.__resizeTriggers__,
         expand = triggers.firstElementChild,
         contract = triggers.lastElementChild,
         expandChild = expand.firstElementChild;
@@ -245,7 +246,7 @@ export function createDetectElementResize(nonce, hostWindow) {
       expand.scrollTop = expand.scrollHeight;
     };
 
-    var checkTriggers = function (element) {
+    const checkTriggers = function (element) {
       return (
         element.offsetWidth != element.__resizeLast__.width || element.offsetHeight != element.__resizeLast__.height
       );
@@ -262,7 +263,7 @@ export function createDetectElementResize(nonce, hostWindow) {
         return;
       }
 
-      var element = this;
+      const element = this;
       resetTriggers(this);
       if (this.__resizeRAF__) {
         cancelFrame(this.__resizeRAF__);
@@ -286,13 +287,13 @@ export function createDetectElementResize(nonce, hostWindow) {
       startEvents = 'webkitAnimationStart animationstart oAnimationStart MSAnimationStart'.split(' '),
       pfx = '';
     {
-      var elm = _window.document.createElement('fakeelement');
+      const elm = _window.document.createElement('fakeelement');
       if (elm.style.animationName !== undefined) {
         animation = true;
       }
 
       if (animation === false) {
-        for (var i = 0; i < domPrefixes.length; i++) {
+        for (let i = 0; i < domPrefixes.length; i++) {
           if (elm.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
             pfx = domPrefixes[i];
             keyframeprefix = '-' + pfx.toLowerCase() + '-';
@@ -310,10 +311,10 @@ export function createDetectElementResize(nonce, hostWindow) {
     var animationStyle = keyframeprefix + 'animation: 1ms ' + animationName + '; ';
   }
 
-  var createStyles = function (doc) {
+  const createStyles = function (doc) {
     if (!doc.getElementById('detectElementResize')) {
       //opacity:0 works around a chrome bug https://code.google.com/p/chromium/issues/detail?id=286360
-      var css =
+      const css =
           (animationKeyframes ? animationKeyframes : '') +
           '.resize-triggers { ' +
           (animationStyle ? animationStyle : '') +
@@ -339,13 +340,13 @@ export function createDetectElementResize(nonce, hostWindow) {
     }
   };
 
-  var addResizeListener = function (element, fn) {
+  const addResizeListener = function (element, fn) {
     if (attachEvent) {
       element.attachEvent('onresize', fn);
     } else {
       if (!element.__resizeTriggers__) {
-        var doc = element.ownerDocument;
-        var elementStyle = _window.getComputedStyle(element);
+        const doc = element.ownerDocument;
+        const elementStyle = _window.getComputedStyle(element);
         if (elementStyle && elementStyle.position == 'static') {
           element.style.position = 'relative';
         }
@@ -376,7 +377,7 @@ export function createDetectElementResize(nonce, hostWindow) {
     }
   };
 
-  var removeResizeListener = function (element, fn) {
+  const removeResizeListener = function (element, fn) {
     if (attachEvent) {
       element.detachEvent('onresize', fn);
     } else {

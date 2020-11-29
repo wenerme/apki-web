@@ -61,7 +61,7 @@ export const PackageListAside: React.FC<{ data: PkgName[] }> = ({ data }) => {
   const filter = useMemo(() => {
     let f = (v: PkgName) => true;
     if (state.originOnly) {
-      let last = f;
+      const last = f;
       f = (v) => last(v) && v.origin == v.name;
     }
     return f;

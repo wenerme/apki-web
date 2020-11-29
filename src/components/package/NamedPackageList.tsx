@@ -68,7 +68,7 @@ export const NamedPackageList: React.FC<{ packages: any[]; branch?; arch? }> = (
                         <a>{v}</a>
                       </Link>
                     }
-                    disabled={!Boolean(pkg.byBranchArch[`${state.branch}/${v}`])}
+                    disabled={!pkg.byBranchArch[`${state.branch}/${v}`]}
                   />
                 );
               })}
@@ -94,7 +94,7 @@ export const NamedPackageList: React.FC<{ packages: any[]; branch?; arch? }> = (
                       <a>{v}</a>
                     </Link>
                   }
-                  disabled={!Boolean(pkg.byBranchArch[`${v}/${state.arch}`])}
+                  disabled={!pkg.byBranchArch[`${v}/${state.arch}`]}
                   panel={<PackageDetailPanel pkg={pkg.byBranchArch[`${state.branch}/${state.arch}`]} />}
                 />
               );

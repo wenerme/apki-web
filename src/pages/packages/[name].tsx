@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { name } }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [],
+    paths: ['libpq', 'mariadb', 'go'], // demo only
     fallback: 'blocking',
   };
 };
